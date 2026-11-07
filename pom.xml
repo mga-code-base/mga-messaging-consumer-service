@@ -50,7 +50,6 @@
 		</dependencies>
 	</dependencyManagement>
 
-	<!-- Shared Base Dependencies -->
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -98,9 +97,9 @@
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.github.my-gym-app</groupId>
-			<artifactId>mga-all-models</artifactId>
-			<version>ec625be5f9</version>
+			<groupId>com.github.mga-code-base</groupId>
+			<artifactId>mga-all-models-jars</artifactId>
+			<version>release-v1.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -114,9 +113,7 @@
 		</dependency>
 	</dependencies>
 
-	<!-- Conditional Profiles for Local Dev vs Kubernetes Native Isolation -->
 	<profiles>
-		<!-- 1. Default Local Development Profile -->
 		<profile>
 			<id>dev</id>
 			<activation>
@@ -130,11 +127,9 @@
 			</dependencies>
 		</profile>
 
-		<!-- 2. Kubernetes Standard Production Profile (Drops Eureka client) -->
 		<profile>
 			<id>k8s-prod</id>
 			<dependencies>
-				<!-- Eureka client excluded intentionally for Kubernetes native internal networking -->
 			</dependencies>
 		</profile>
 	</profiles>
