@@ -6,9 +6,9 @@ public final class MessageConsumerConstants {
 
 	public static final String TOPIC_ENDPOINT = "/topic";
 
-	public static final String CONSUMER_REST_CONTROLLER = "/api/consumer/notifications";
+	public static final String CONSUMER_REST_CONTROLLER = "/api/v1/consumer/notifications";
 
-	public static final String CONSUMER_REST_CONTROLLER_SAFETY = "/api/consumer/notifications/";
+	public static final String CONSUMER_REST_CONTROLLER_SAFETY = "/api/v1/consumer/notifications/";
 
 	public static final String SYNC_ENDPOINT = "/sync-history";
 

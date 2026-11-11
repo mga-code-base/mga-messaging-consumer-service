@@ -24,7 +24,7 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(PlatformEndpoints.PUBLIC).permitAll()
-                        .requestMatchers("/api/consumer", "/api/consumer/**", NOTIFICATIONS_ENDPOINT, NOTIFICATIONS_ENDPOINT + "/**")
+                        .requestMatchers("/api/v1/consumer", "/api/v1/consumer/**", NOTIFICATIONS_ENDPOINT, NOTIFICATIONS_ENDPOINT + "/**")
                             .hasAnyRole("ADMIN", "TRAINER", "MEMBER")
                         .anyRequest().authenticated())
                 .oauth2ResourceServer(oauth -> oauth.jwt(jwt -> jwt.jwtAuthenticationConverter(JwtRoleConverter.create())))
