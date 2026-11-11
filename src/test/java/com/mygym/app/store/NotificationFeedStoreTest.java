@@ -27,8 +27,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ZSetOperations;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mygym.app.models.Notification;
+
+import tools.jackson.databind.json.JsonMapper;
 
 @ExtendWith(MockitoExtension.class)
 class NotificationFeedStoreTest {
@@ -42,7 +43,7 @@ class NotificationFeedStoreTest {
     @Mock
     private ZSetOperations<String, String> zSet;
 
-    private final ObjectMapper mapper = new ObjectMapper();
+    private final JsonMapper mapper = JsonMapper.builder().build();
     private NotificationFeedStore store;
 
     @BeforeEach

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mga-messaging-consumer-service
+  labels:
+    app: mga-messaging-consumer-service
+    app.kubernetes.io/part-of: mga
+spec:
+  type: ClusterIP
+  selector:
+    app: mga-messaging-consumer-service
+  ports:
+    - name: http
+      port: 80
+      targetPort: http

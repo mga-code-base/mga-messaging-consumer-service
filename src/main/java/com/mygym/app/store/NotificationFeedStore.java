@@ -16,9 +16,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mygym.app.models.Notification;
+
+import tools.jackson.core.JacksonException;
+import tools.jackson.databind.json.JsonMapper;
 
 @Component
 public class NotificationFeedStore {
@@ -26,7 +27,7 @@ public class NotificationFeedStore {
     private static final Logger LOGGER = LoggerFactory.getLogger(NotificationFeedStore.class);
 
     private final StringRedisTemplate redis;
-    private final ObjectMapper mapper;
+    private final JsonMapper mapper;
     private final Clock clock;
     private final Duration retention;
     private final long maxEntries;
@@ -35,10 +36,10 @@ public class NotificationFeedStore {
     public NotificationFeedStore(StringRedisTemplate redis,
             @Value("${mga.notifications.retention:PT24H}") Duration retention,
             @Value("${mga.notifications.max-entries:10000}") long maxEntries) {
-        this(redis, new ObjectMapper(), Clock.systemUTC(), retention, maxEntries);
+        this(redis, JsonMapper.builder().build(), Clock.systemUTC(), retention, maxEntries);
     }
 
-    NotificationFeedStore(StringRedisTemplate redis, ObjectMapper mapper, Clock clock, Duration retention, long maxEntries) {
+    NotificationFeedStore(StringRedisTemplate redis, JsonMapper mapper, Clock clock, Duration retention, long maxEntries) {
         this.redis = redis;
         this.mapper = mapper;
         this.clock = clock;
@@ -71,7 +72,7 @@ public class NotificationFeedStore {
     public Notification fromJson(String json) {
         try {
             return mapper.readValue(json, Notification.class);
-        } catch (JsonProcessingException e) {
+        } catch (JacksonException e) {
             LOGGER.warn("Skipping unreadable notification entry", e);
             return null;
         }
@@ -80,7 +81,7 @@ public class NotificationFeedStore {
     private String toJson(Notification notification) {
         try {
             return mapper.writeValueAsString(notification);
-        } catch (JsonProcessingException e) {
+        } catch (JacksonException e) {
             throw new IllegalStateException("Could not serialise notification " + notification.notificationId(), e);
         }
     }
